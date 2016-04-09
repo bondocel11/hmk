@@ -20,16 +20,17 @@ import models.Warehouse;
 public class AdminView {
 	private Warehouse wh;
 	private IOStream io;
-	static JTable table;
-	static DefaultTableModel model;
+	private JTable table;
+	private DefaultTableModel model;
 
 	public AdminView() {
 
 		JFrame frame = new JFrame();
+		io = new IOStream();
 		table = new JTable();
 		wh = new Warehouse();
 		wh = io.deserializeWarehouse();
-
+		wh.print();
 		// create a table model and set a Column Identifiers to this model
 		Object[] columns = { "Item", "Size", "Color", "Price", "Stock" };
 		model = new DefaultTableModel();
@@ -41,6 +42,14 @@ public class AdminView {
 		table.setForeground(Color.black);
 		table.setFont(font);
 		table.setRowHeight(30);
+
+		for (Product product : wh.getProducts()) {
+			if (LogIn.adminButton().isSelected()) {
+				Object[] row = { product.getItem(), product.getSize(), product.getColor(), product.getPrice(),
+						product.getStock() };
+				model.addRow(row);
+			}
+		}
 
 		// JTextField textId = new JTextField();
 
@@ -184,7 +193,7 @@ public class AdminView {
 
 	}
 
-	public static DefaultTableModel getModel() {
+	/*public static DefaultTableModel getModel() {
 		return model;
-	}
+	}*/
 }

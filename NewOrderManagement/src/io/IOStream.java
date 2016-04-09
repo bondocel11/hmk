@@ -50,15 +50,17 @@ public class IOStream {
 			System.out.println("Warehouse class not found");
 			c.printStackTrace();
 		}
-		Iterator<Product> it=warehouse.getProducts().iterator();
+		
+		
+		/*Iterator<Product> it=warehouse.getProducts().iterator();
 		while (it.hasNext()){
 			Product p=it.next();
-			System.out.println(p.getItem() + " " +p.getStock()+"\n");
+			//System.out.println(p.getItem() + " " +p.getStock()+"\n");
 			if (LogIn.adminButton().isSelected()){ 
 			Object[] row = { p.getItem(), p.getSize(), p.getColor(),p.getPrice(),p.getStock() };
 			((DefaultTableModel) AdminView.getModel()).addRow(row);
 			}
-		}
+		}*/
 		return warehouse;
 	}
 	
@@ -95,7 +97,7 @@ public class IOStream {
 		Iterator<Order> it=op.getOrders().iterator();
 		while (it.hasNext()){
 			Order p=it.next();
-			System.out.println(p.getCustomer().getName() + " " +p.toString()+"\n");
+			//System.out.println(p.getCustomer().getName() + " " +p.toString()+"\n");
 		}
 	}
 	//CUSTOMERS
@@ -131,7 +133,7 @@ public class IOStream {
 		Iterator<Customer> it=customers.getCustomers().iterator();
 		while (it.hasNext()){
 			Customer p=it.next();
-			System.out.println(p.getName());
+		//	System.out.println(p.getName());
 		}
 	}
 	

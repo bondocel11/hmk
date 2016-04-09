@@ -12,7 +12,7 @@ public class Runner {
 
 	public static void main(String[] args) {
 		new LogIn();
-		IOStream io = new IOStream();
+		/*IOStream io = new IOStream();
 		Warehouse warehouse = new Warehouse();
 		Order orders[] = new Order[4];
 		Product products[] = new Product[5];
@@ -117,6 +117,6 @@ public class Runner {
 		// ordersDept.print();
 		io.SerializeOPdept(ordersDept);
 		
+	}*/
 	}
-
 }
