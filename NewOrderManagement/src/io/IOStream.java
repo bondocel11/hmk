@@ -51,16 +51,6 @@ public class IOStream {
 			c.printStackTrace();
 		}
 		
-		
-		/*Iterator<Product> it=warehouse.getProducts().iterator();
-		while (it.hasNext()){
-			Product p=it.next();
-			//System.out.println(p.getItem() + " " +p.getStock()+"\n");
-			if (LogIn.adminButton().isSelected()){ 
-			Object[] row = { p.getItem(), p.getSize(), p.getColor(),p.getPrice(),p.getStock() };
-			((DefaultTableModel) AdminView.getModel()).addRow(row);
-			}
-		}*/
 		return warehouse;
 	}
 	

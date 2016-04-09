@@ -22,6 +22,7 @@ public class AdminView {
 	private IOStream io;
 	private JTable table;
 	private DefaultTableModel model;
+	private Product p;
 
 	public AdminView() {
 
@@ -30,7 +31,8 @@ public class AdminView {
 		table = new JTable();
 		wh = new Warehouse();
 		wh = io.deserializeWarehouse();
-		wh.print();
+
+	
 		// create a table model and set a Column Identifiers to this model
 		Object[] columns = { "Item", "Size", "Color", "Price", "Stock" };
 		model = new DefaultTableModel();
@@ -119,10 +121,18 @@ public class AdminView {
 				// add row to the model
 
 				model.addRow(row);
-				Product product = new Product(row[0].toString(), row[1].toString(), row[2].toString(),
-						Double.parseDouble(row[3].toString()), Integer.parseInt(row[4].toString()));
+			//	
+				Product product = new Product(row[0].toString(), row[1].toString(), row[2].toString(),Double.parseDouble(row[3].toString()), Integer.parseInt(row[4].toString()));
+					
 				wh.add(product);
+				wh.print();
+			//	wh.getProducts()
 				io.SerializeWarehouse(wh);
+				wh=io.deserializeWarehouse();
+		//		System.out.println(wh.findProduct("Dress", "M","Red", 200, 5).getItem());
+				System.out.println("ADMIN ADDED PRODUCTS");
+				
+				
 			}
 		});
 
@@ -137,14 +147,13 @@ public class AdminView {
 		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// i = the index of the selected row
 				int i = table.getSelectedRow();
 				if (i >= 0) {
-					// remove a row from jtable
-					// wh.deleteCorrespondingProduct(row[0].toString(),
-					// row[1].toString(), row[2].toString(),
-					// (Product) wh.getRoot());
-					// model.removeRow(i);
+					
+					Product product=wh.findProduct(row[0].toString(), row[1].toString(), row[2].toString(),Double.parseDouble(row[3].toString()),Integer.parseInt(row[4].toString()));
+					if (product!=null) wh.remove(product);
+				    model.removeRow(i);
+				    wh.print();
 				} else {
 					System.out.println("Delete Error");
 				}
@@ -159,7 +168,7 @@ public class AdminView {
 				textItem.setText(model.getValueAt(i, 0).toString());
 				textSize.setText(model.getValueAt(i, 1).toString());
 				textColor.setText(model.getValueAt(i, 2).toString());
-				textPrice.setText(model.getValueAt(i, 2).toString());
+				textPrice.setText(model.getValueAt(i, 3).toString());
 				textStock.setText(model.getValueAt(i, 4).toString());
 			}
 		});
