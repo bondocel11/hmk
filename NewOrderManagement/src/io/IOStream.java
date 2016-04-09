@@ -16,7 +16,7 @@ import models.Product;
 import models.Warehouse;
 import sample.CustomerSample;
 import views.AdminView;
-import views.LogIn;
+import views.LoginView;
 
 public class IOStream {
 
@@ -35,7 +35,7 @@ public class IOStream {
 		}
 	}
 	public Warehouse deserializeWarehouse(){
-		Warehouse warehouse=null;
+		Warehouse warehouse=new Warehouse();
 		try{
 			FileInputStream fileIn=new FileInputStream("warehouse.ser");
 			ObjectInputStream in=new ObjectInputStream(fileIn);
@@ -62,13 +62,13 @@ public class IOStream {
 		    out.writeObject(op);
 		    out.close();
 		    fileOut.close();
-		    System.out.printf("Serialized data is saved in warehouse.ser");
+		    System.out.printf("Serialized data is saved in orders.ser");
 		}
 		catch(IOException i){
 			i.printStackTrace();
 		}
 	}
-	public void deserializeOPDept(){
+	public OPDept deserializeOPDept(){
 		OPDept op=null;
 		try{
 			FileInputStream fileIn=new FileInputStream("orders.ser");
@@ -89,6 +89,7 @@ public class IOStream {
 			Order p=it.next();
 			//System.out.println(p.getCustomer().getName() + " " +p.toString()+"\n");
 		}
+		return op;
 	}
 	//CUSTOMERS
 	public void SerializeCustomerSample(CustomerSample sample){
@@ -104,7 +105,7 @@ public class IOStream {
 			i.printStackTrace();
 		}
 	}
-	public void deserializeCustomerSample(){
+	public CustomerSample deserializeCustomerSample(){
 		CustomerSample customers=null;
 		try{
 			FileInputStream fileIn=new FileInputStream("customers.ser");
@@ -120,11 +121,8 @@ public class IOStream {
 			System.out.println("CustomerSample class not found");
 			c.printStackTrace();
 		}
-		Iterator<Customer> it=customers.getCustomers().iterator();
-		while (it.hasNext()){
-			Customer p=it.next();
-		//	System.out.println(p.getName());
-		}
+	
+		return customers;
 	}
 	
 	

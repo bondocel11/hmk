@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order implements Entity,Serializable{
-	private static AtomicInteger ID_GENERATOR = new AtomicInteger(1000);
+	
 	private int ID;
 	private Customer customer;
 	private List<Product> shoppingCart;
 	
-	public Order(Customer customer){
-		this.setID(ID_GENERATOR.getAndIncrement());
+	public Order(int ID,Customer customer){
+		this.ID=ID;
 		shoppingCart=new ArrayList<Product>();
 		this.customer=customer;
 	}

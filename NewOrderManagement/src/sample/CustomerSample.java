@@ -7,6 +7,10 @@ import java.util.List;
 import models.Customer;
 
 public class CustomerSample implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -528318986793977624L;
 	List<Customer> customers;
 	
 	public CustomerSample(){
@@ -17,5 +21,9 @@ public class CustomerSample implements Serializable{
 	}
 	public List<Customer> getCustomers(){
 		return customers;
+	}
+	public void print() {
+		for (Customer customer:customers)
+		System.out.println(customer.getName()+" "+customer.getPassword());
 	}
 }

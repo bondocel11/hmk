@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Product implements Entity,Serializable{
-	private static AtomicInteger ID_GENERATOR = new AtomicInteger(1000);
+	
 	private int ID;
 	private String item;
 	private String size;
@@ -12,8 +12,8 @@ public class Product implements Entity,Serializable{
 	private double price;
 	private int stock;
 	
-	public Product(String item,String size,String color,double price,int stock){
-		this.setID(ID_GENERATOR.getAndIncrement());
+	public Product(int ID,String item,String size,String color,double price,int stock){
+		this.ID = ID;
 		this.item=item;
 		this.size=size;
 		this.color=color;

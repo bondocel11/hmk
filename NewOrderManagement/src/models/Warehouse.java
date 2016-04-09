@@ -50,12 +50,11 @@ public class Warehouse implements Serializable {
 		}
 	}
 
-	public Product findProduct(String item, String size, String color, double price, int stock) {
+	public Product findProduct(int ID) {
 		Iterator<Product> it = products.iterator();
 		while (it.hasNext()) {
 			Product product = it.next();
-			if ((product.getItem() == item) && (product.getSize() == size) && (product.getColor() == color)
-					&& (product.getPrice() == price) && (product.getStock() == stock))
+			if (product.getID() == ID)
 				return product;
 		}
 		return null;
@@ -64,7 +63,16 @@ public class Warehouse implements Serializable {
 
 	public void print() {
 		for (Product p : products) {
-			System.out.println(p.getItem() + " " +p.getColor()+" "+ p.getStock() + "\n");
+			System.out.println(p.getItem()+" " + p.getSize()+" "+p.getColor()+" "+ p.getStock() + "\n");
 		}
+	}
+
+	public Product findProductAfterItem(String item,String size,String color) {
+		for (Product p : products) {
+			if ((item.compareTo(p.getItem())==0)&&(size.compareTo(p.getSize())==0)&&(color.compareTo(p.getColor())==0)){
+				return p;
+			}
+		}
+		return null;
 	}
 }

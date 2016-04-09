@@ -34,7 +34,7 @@ public class AdminView {
 
 	
 		// create a table model and set a Column Identifiers to this model
-		Object[] columns = { "Item", "Size", "Color", "Price", "Stock" };
+		Object[] columns = { "ID","Item", "Size", "Color", "Price", "Stock" };
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers(columns);
 
@@ -46,15 +46,14 @@ public class AdminView {
 		table.setRowHeight(30);
 
 		for (Product product : wh.getProducts()) {
-			if (LogIn.adminButton().isSelected()) {
-				Object[] row = { product.getItem(), product.getSize(), product.getColor(), product.getPrice(),
+				Object[] row = {product.getID(), product.getItem(), product.getSize(), product.getColor(), product.getPrice(),
 						product.getStock() };
 				model.addRow(row);
 			}
-		}
+		
 
 		// JTextField textId = new JTextField();
-
+		JTextField textID = new JTextField();
 		JTextField textItem = new JTextField();
 		JTextField textSize = new JTextField();
 		JTextField textColor = new JTextField();
@@ -69,7 +68,7 @@ public class AdminView {
 		JButton btnViewOrders = new JButton("Orders");
 
 		// textId.setBounds(20, 220, 100, 25);
-
+		textID.setBounds(20, 200, 100, 25);
 		textItem.setBounds(20, 220, 100, 25);
 		textSize.setBounds(20, 240, 100, 25);
 		textColor.setBounds(20, 265, 100, 25);
@@ -89,7 +88,7 @@ public class AdminView {
 
 		// add JTextFields to the jframe
 		// frame.add(textId);
-
+		frame.add(textID);
 		frame.add(textItem);
 		frame.add(textSize);
 		frame.add(textColor);
@@ -105,40 +104,37 @@ public class AdminView {
 
 		// create an array of objects to set the row data
 
-		Object[] row = new Object[5];
+		Object[] row = new Object[6];
 
 		// button add row
 
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				row[0] = textItem.getText();
-				row[1] = textSize.getText();
-				row[2] = textColor.getText();
-				row[3] = textPrice.getText();
-				row[4] = textStock.getText();
+				row[0] = textID.getText();
+				row[1] = textItem.getText();
+				row[2] = textSize.getText();
+				row[3] = textColor.getText();
+				row[4] = textPrice.getText();
+				row[5] = textStock.getText();
 
 				// add row to the model
 
 				model.addRow(row);
-			//	
-				Product product = new Product(row[0].toString(), row[1].toString(), row[2].toString(),Double.parseDouble(row[3].toString()), Integer.parseInt(row[4].toString()));
-					
+				Product product = new Product(Integer.parseInt(row[0].toString()), row[1].toString(), row[2].toString(),row[3].toString(),Double.parseDouble(row[4].toString()), Integer.parseInt(row[5].toString()));
 				wh.add(product);
-				wh.print();
-			//	wh.getProducts()
-				io.SerializeWarehouse(wh);
-				wh=io.deserializeWarehouse();
-		//		System.out.println(wh.findProduct("Dress", "M","Red", 200, 5).getItem());
 				System.out.println("ADMIN ADDED PRODUCTS");
-				
-				
+				wh.print();
+				io.SerializeWarehouse(wh);
+		
 			}
 		});
 
 		btnViewOrders.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				new OrdersView();
+				frame.dispose();
 			}
 
 		});
@@ -147,13 +143,18 @@ public class AdminView {
 		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//wh=io.deserializeWarehouse();	
+				row[0] = textID.getText();
 				int i = table.getSelectedRow();
 				if (i >= 0) {
-					
-					Product product=wh.findProduct(row[0].toString(), row[1].toString(), row[2].toString(),Double.parseDouble(row[3].toString()),Integer.parseInt(row[4].toString()));
+
+				  Product product=wh.findProduct(Integer.parseInt(row[0].toString()));
+				   System.out.println(product.getID()+" "+product.getItem()+" "+product.getColor());	
 					if (product!=null) wh.remove(product);
 				    model.removeRow(i);
+				    System.out.println("ADMIN REMOVED PRODUCTS");
 				    wh.print();
+				    io.SerializeWarehouse(wh);
 				} else {
 					System.out.println("Delete Error");
 				}
@@ -165,11 +166,12 @@ public class AdminView {
 			public void mouseClicked(MouseEvent e) {
 				// i = the index of the selected row
 				int i = table.getSelectedRow();
-				textItem.setText(model.getValueAt(i, 0).toString());
-				textSize.setText(model.getValueAt(i, 1).toString());
-				textColor.setText(model.getValueAt(i, 2).toString());
-				textPrice.setText(model.getValueAt(i, 3).toString());
-				textStock.setText(model.getValueAt(i, 4).toString());
+				textID.setText(model.getValueAt(i, 0).toString());
+				textItem.setText(model.getValueAt(i, 1).toString());
+				textSize.setText(model.getValueAt(i, 2).toString());
+				textColor.setText(model.getValueAt(i, 3).toString());
+				textPrice.setText(model.getValueAt(i, 4).toString());
+				textStock.setText(model.getValueAt(i, 5).toString());
 			}
 		});
 		// button update row
@@ -179,17 +181,20 @@ public class AdminView {
 				// i = the index of the selected row
 				int i = table.getSelectedRow();
 				if (i >= 0) {
-					model.setValueAt(textItem.getText(), i, 0);
-					model.setValueAt(textSize.getText(), i, 1);
-					model.setValueAt(textColor.getText(), i, 2);
-					model.setValueAt(textPrice.getText(), i, 3);
-					model.setValueAt(textStock.getText(), i, 4);
+					model.setValueAt(textID.getText(), i, 0);
+					model.setValueAt(textItem.getText(), i, 1);
+					model.setValueAt(textSize.getText(), i, 2);
+					model.setValueAt(textColor.getText(), i, 3);
+					model.setValueAt(textPrice.getText(), i, 4);
+					model.setValueAt(textStock.getText(), i, 5);
 
-					row[3] = textStock.getText();
-					// wh.updateCorrespondingProduct(row[0].toString(),
-					// row[1].toString(), row[2].toString(),
-					// Integer.parseInt(row[3].toString()), (Product)
-					// wh.getRoot());
+					row[0] = textID.getText();
+					row[5] = textStock.getText();
+					Product p= wh.findProduct(Integer.parseInt(row[0].toString()));
+					p.setStock(Integer.parseInt(row[5].toString()));
+					System.out.println("ADMIN MODIFIED STOCK");
+					wh.print();
+					io.SerializeWarehouse(wh);
 				} else {
 					System.out.println("Update Error");
 				}
@@ -202,7 +207,5 @@ public class AdminView {
 
 	}
 
-	/*public static DefaultTableModel getModel() {
-		return model;
-	}*/
+	
 }
